@@ -5,8 +5,8 @@ namespace GradeBook.UserInterfaces
 {
     public static class StartingUserInterface
     {
-        private const int VALID_COMMAND_LENGTH = 3;
-        private const string INVALID_COMMAND_LENGTH_MSG = "Command not valid, Create requires a name and type of gradebook.";
+        private const int VALID_COMMAND_LENGTH = 4;
+        private const string INVALID_COMMAND_LENGTH_MSG = "Command not valid, Create requires a name, type of gradebook, if it's weighted (true / false).";
         public static bool Quit = false;
         public static void CommandLoop()
         {
@@ -41,15 +41,17 @@ namespace GradeBook.UserInterfaces
                 Console.WriteLine(INVALID_COMMAND_LENGTH_MSG);
                 return;
             }
-            var name = parts[1];
             BaseGradeBook gradeBook = null;
-            switch (parts[2].ToLower())
+            var name = parts[1];
+            string type = parts[2].ToLower();
+            bool isWeighted = bool.Parse(parts[3]);
+            switch (type)
             {
                 case "standard":
-                    gradeBook = new StandardGradeBook(name);
+                    gradeBook = new StandardGradeBook(name, isWeighted);
                     break;
                 case "ranked":
-                    gradeBook = new RankedGradeBook(name);
+                    gradeBook = new RankedGradeBook(name, isWeighted);
                     break;
                 default:
                     Console.WriteLine($"{parts[2]} is not a supported type of gradebook, please try again");
@@ -81,7 +83,7 @@ namespace GradeBook.UserInterfaces
             Console.WriteLine();
             Console.WriteLine("GradeBook accepts the following commands:");
             Console.WriteLine();
-            Console.WriteLine("Create 'Name' 'Type' - Creates a new gradebook where 'Name' is the name of the gradebook and 'Type' is what type of grading it should use.");
+            Console.WriteLine("Create 'Name' 'Type' 'Weighted' - Creates a new gradebook where 'Name' is the name of the gradebook, 'Type' is what type of grading it should use, and 'Weighted' is whether or not grades should be weighted (true or false).");
             Console.WriteLine();
             Console.WriteLine("Load 'Name' - Loads the gradebook with the provided 'Name'.");
             Console.WriteLine();
