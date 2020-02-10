@@ -8,11 +8,12 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace GradeBook.GradeBooks
-{
+{    
     public class BaseGradeBook
     {
         public string Name { get; set; }
         public List<Student> Students { get; set; }
+        protected GradeBookType Type { get; set; }
 
         public BaseGradeBook(string name)
         {
